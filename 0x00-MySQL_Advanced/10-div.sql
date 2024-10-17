@@ -1,18 +1,8 @@
--- creates a safeDiv function
-
+-- creates a division function
 DELIMITER //
-
--- function creation
-CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS DECIMAL(10,2)
-DETERMINISTIC
+-- division function
+CREATE FUNCTION SafeDiv(a INT, b INT) RETURNS FLOAT
 BEGIN
-    -- Check if b is 0
-    IF b = 0 THEN
-        RETURN 0;
-    ELSE
-        RETURN a / b;
-    END IF;
+    RETURN IF(b = 0, 0, a / b);
 END //
-
 DELIMITER ;
