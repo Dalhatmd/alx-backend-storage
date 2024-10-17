@@ -1,6 +1,8 @@
 -- creates a safeDiv function
+
 DELIMITER //
---Function creation
+
+-- function creation
 CREATE FUNCTION SafeDiv(a INT, b INT)
 RETURNS DECIMAL(10,2)
 DETERMINISTIC
