@@ -1,0 +1,3 @@
+// inserts into a database
+db.createCollection("school")
+db.school.insert({name: "Holberton school"})
