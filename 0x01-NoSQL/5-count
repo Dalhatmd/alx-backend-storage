@@ -1,0 +1,2 @@
+// counts numbef of documents in a collection
+db.school.countDocuments({})
