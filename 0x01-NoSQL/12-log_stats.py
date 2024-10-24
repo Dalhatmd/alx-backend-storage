@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-""" gets logs from a mongodb database"""
+"""gets logs from a mongodb database"""
 from pymongo import MongoClient
 
 
 def get_logs():
-    """ gets and formats logs """
+    """gets and formats logs"""
     client = MongoClient('mongodb://127.0.0.1:27017')
     db = client.logs
     collection = db['nginx']
@@ -23,4 +23,5 @@ def get_logs():
     print(f"{status_check} status check")
 
 
-get_logs()
+if __name__ == "__main__":
+    get_logs()
