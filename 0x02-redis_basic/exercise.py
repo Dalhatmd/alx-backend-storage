@@ -15,8 +15,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None)
-    -> Union[str, int, bytes, None]:
+    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, int, bytes, None]:
         """ converts data to desired format """
         data = self._redis.get(key)
 
