@@ -88,4 +88,4 @@ def replay(func):
             output = output.decode('utf-8')
         except Exception:
             output = ""
-        print(f"{name}*({inp}) -> {output}")
+        print(f"{name}(*{inp}) -> {output}")
