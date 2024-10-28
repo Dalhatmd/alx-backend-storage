@@ -37,6 +37,7 @@ def call_history(method: Callable) -> Callable:
 
 
 class Cache:
+    """ a redis cache """
     def __init__(self):
         # Connect to Redis and clear the database
         self._redis = redis.Redis(host='localhost', port=6379, db=0)
@@ -85,7 +86,7 @@ def replay(func):
     inputs = _redis.lrange(f"{name}:inputs", 0, -1)
     outputs = _redis.lrange(f"{name}:outputs", 0, -1)
 
-    print(f"{name} was called {ret_value} times")
+    print(f"{name} was called {ret_value} times:")
     for inp, output in zip(inputs, outputs):
         try:
             inp = inp.decode('utf-8')
