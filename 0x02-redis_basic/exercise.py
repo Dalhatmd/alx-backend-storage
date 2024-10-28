@@ -37,7 +37,7 @@ def call_history(method: Callable) -> Callable:
 
 
 class Cache:
-    """ a redis cache """
+    """ creates a redis cache class"""
     def __init__(self):
         # Connect to Redis and clear the database
         self._redis = redis.Redis(host='localhost', port=6379, db=0)
