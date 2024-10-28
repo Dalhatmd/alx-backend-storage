@@ -11,7 +11,6 @@ def count_calls(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        # Increment call count for the given method
         self._redis.incr(key)
         return method(self, *args, **kwargs)
 
@@ -41,7 +40,6 @@ class Cache:
     @count_calls
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        # Generate a unique key and store data
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
@@ -53,7 +51,6 @@ class Cache:
         if data is None:
             return None
 
-        # Apply transformation function if provided
         if fn:
             return fn(data)
 
@@ -67,3 +64,28 @@ class Cache:
         """ Retrieve data as an integer """
         return self.get(key, fn=int)
 
+def replay(func):
+    """ replays function calls """
+    _redis = redis.Redis(host='localhost', port=6379, db=0)
+    name = func.__qualname__
+
+    ret_value = _redis.get(f"{name}_calls")
+    try:
+        ret_value = int(ret_value.decode('utf-8'))
+    except Exception:
+        ret_value = 0
+
+    inputs = _redis.lrange(f"{name}:inputs", 0, -1)
+    outputs = _redis.lrange(f"{name}:outputs", 0, -1)
+    
+    print(f"{name} was called {ret_value} times")
+    for inp, output in zip(inputs, outputs):
+        try:
+            inp = inp.decode('utf-8')
+        except Exception:
+            input = ""
+        try:
+            output = output.decode('utf-8')
+        except Exception:
+            output = ""
+        print(f"{name}*({inp}) -> {output}")
